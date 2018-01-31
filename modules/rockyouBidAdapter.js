@@ -194,6 +194,7 @@ let buildRequests = (validBidRequests, requestRoot) => {
           data: requestPayload,
           mediaTypes,
           requestId: requestRoot.bidderRequestId,
+          bidId: bidRequest.bidId,
           adUnitCode,
           rendererOverride
         };
@@ -314,7 +315,7 @@ let interpretResponse = (serverResponse, request) => {
         }
 
         let response = {
-          requestId: responseBody.id,
+          requestId: request.bidId,
           cpm: bid.price,
           width: bidWidth,
           height: bidHeight,
