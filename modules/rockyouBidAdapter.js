@@ -6,7 +6,7 @@ import { registerBidder } from 'src/adapters/bidderFactory';
 const BIDDER_CODE = 'rockyou';
 
 const BASE_REQUEST_PATH = 'https://tas.rockyou.net/servlet/rotator/';
-const IFRAME_SYNC_URL = 'https://prebid.tex-sync.rockyou.net/usersync2/tas';
+const IFRAME_SYNC_URL = 'https://prebid.tas-sync.rockyou.net/usersync2/prebid';
 const VAST_PLAYER_LOCATION = 'https://rya-static.rockyou.com/rya/js/PreBidPlayer.js';
 export const ROTATION_ZONE = 'prod';
 
