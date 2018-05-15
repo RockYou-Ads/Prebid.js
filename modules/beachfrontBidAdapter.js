@@ -24,7 +24,7 @@ export const spec = {
     return !!(bid && bid.params && bid.params.appId && bid.params.bidfloor);
   },
 
-  buildRequests(bids) {
+  buildRequests(bids, bidderRequest) {
     let requests = [];
     let videoBids = bids.filter(bid => isVideoBid(bid));
     let bannerBids = bids.filter(bid => !isVideoBid(bid));
@@ -32,7 +32,7 @@ export const spec = {
       requests.push({
         method: 'POST',
         url: VIDEO_ENDPOINT + bid.params.appId,
-        data: createVideoRequestData(bid),
+        data: createVideoRequestData(bid, bidderRequest),
         bidRequest: bid
       });
     });
@@ -40,7 +40,7 @@ export const spec = {
       requests.push({
         method: 'POST',
         url: BANNER_ENDPOINT,
-        data: createBannerRequestData(bannerBids),
+        data: createBannerRequestData(bannerBids, bidderRequest),
         bidRequest: bannerBids
       });
     }
@@ -121,7 +121,10 @@ function outstreamRender(bid) {
 }
 
 function getSizes(bid) {
-  return utils.parseSizesInput(bid.sizes).map(size => {
+  let sizes = (isVideoBid(bid)
+    ? utils.deepAccess(bid, 'mediaTypes.video.playerSize')
+    : utils.deepAccess(bid, 'mediaTypes.banner.sizes')) || bid.sizes;
+  return utils.parseSizesInput(sizes).map(size => {
     let [ width, height ] = size.split('x');
     return {
       w: parseInt(width, 10) || undefined,
@@ -181,11 +184,11 @@ function getVideoParams(bid) {
     }, {});
 }
 
-function createVideoRequestData(bid) {
+function createVideoRequestData(bid, bidderRequest) {
   let size = getFirstSize(bid);
   let video = getVideoParams(bid);
   let topLocation = utils.getTopWindowLocation();
-  return {
+  let payload = {
     isPrebid: true,
     appId: bid.params.appId,
     domain: document.location.hostname,
@@ -211,11 +214,21 @@ function createVideoRequestData(bid) {
       js: 1,
       geo: {}
     },
+    regs: {},
+    user: {},
     cur: ['USD']
   };
+
+  if (bidderRequest && bidderRequest.gdprConsent) {
+    let { consentRequired, consentString } = bidderRequest.gdprConsent;
+    payload.regs.ext = { gdpr: consentRequired ? 1 : 0 };
+    payload.user.ext = { consent: consentString };
+  }
+
+  return payload;
 }
 
-function createBannerRequestData(bids) {
+function createBannerRequestData(bids, bidderRequest) {
   let topLocation = utils.getTopWindowLocation();
   let referrer = utils.getTopWindowReferrer();
   let slots = bids.map(bid => {
@@ -226,7 +239,7 @@ function createBannerRequestData(bids) {
       sizes: getSizes(bid)
     };
   });
-  return {
+  let payload = {
     slots: slots,
     page: topLocation.href,
     domain: topLocation.hostname,
@@ -240,6 +253,14 @@ function createBannerRequestData(bids) {
     adapterVersion: ADAPTER_VERSION,
     adapterName: ADAPTER_NAME
   };
+
+  if (bidderRequest && bidderRequest.gdprConsent) {
+    let { consentRequired, consentString } = bidderRequest.gdprConsent;
+    payload.gdpr = consentRequired ? 1 : 0;
+    payload.gdprConsent = consentString;
+  }
+
+  return payload;
 }
 
 registerBidder(spec);
