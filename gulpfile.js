@@ -55,7 +55,7 @@ gulp.task('clean', function () {
 });
 
 function gulpBundle(dev) {
-  return bundle(dev).pipe(gulp.dest('build/' + (dev ? 'dev' : 'dist')));
+  return bundle(dev).pipe(gulp.dest('build/'));
 }
 
 function nodeBundle(modules) {
@@ -174,7 +174,7 @@ gulp.task('webpack', ['clean'], function () {
     .pipe(uglify())
     .pipe(gulpif(file => file.basename === 'prebid-core.js', header(banner, { prebid: prebid })))
     .pipe(optimizejs())
-    .pipe(gulp.dest('build/dist'))
+    .pipe(gulp.dest('build/'))
     .pipe(connect.reload());
 });
 
