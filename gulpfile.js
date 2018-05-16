@@ -174,7 +174,7 @@ gulp.task('webpack', ['clean'], function () {
     .pipe(uglify())
     .pipe(gulpif(file => file.basename === 'prebid-core.js', header(banner, { prebid: prebid })))
     .pipe(optimizejs())
-    .pipe(gulp.dest('build/'))
+    .pipe(gulp.dest('build/dist'))
     .pipe(connect.reload());
 });
 
