@@ -55,7 +55,7 @@ gulp.task('clean', function () {
 });
 
 function gulpBundle(dev) {
-  return bundle(dev).pipe(gulp.dest('build/' + (dev ? 'dev' : 'dist')));
+  return bundle(dev).pipe(gulp.dest('build/'));
 }
 
 function nodeBundle(modules) {

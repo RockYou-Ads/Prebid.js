@@ -2,8 +2,9 @@
   "name": "prebid.js",
   "version": "1.11.0",
   "description": "Header Bidding Management Library",
-  "main": "src/prebid.js",
+  "main": "build/prebid.js",
   "scripts": {
+    "install":"gulp build",
     "test": "gulp run-tests",
     "lint": "gulp lint"
   },
@@ -23,13 +24,15 @@
   "engines": {
     "node": ">=4.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "ajv": "6.2.0",
     "babel-core": "6.22.0",
     "babel-loader": "^7.1.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "block-loader": "^2.1.0",
     "chai": "^3.3.0",
+    "core-js": "^2.4.1",
     "coveralls": "^2.11.11",
     "del": "^2.2.0",
     "documentation": "^5.2.2",
@@ -42,7 +45,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "faker": "^3.1.0",
     "fs.extra": "^1.3.2",
-    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
@@ -57,14 +59,16 @@
     "gulp-rename": "^1.2.0",
     "gulp-replace": "^0.4.0",
     "gulp-shell": "^0.5.2",
+    "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.0",
     "gulp-webdriver": "^1.0.1",
+    "gulp": "^3.9.1",
     "ignore-loader": "^0.1.2",
-    "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^3.0.0",
+    "istanbul": "^0.4.5",
     "json-loader": "^0.5.1",
-    "karma": "^2.0.0",
+    "just-clone": "^1.0.2",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-browserstack-launcher": "^1.0.1",
     "karma-chai": "^0.1.0",
@@ -73,8 +77,8 @@
     "karma-es5-shim": "^0.0.4",
     "karma-firefox-launcher": "^1.0.1",
     "karma-ie-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
+    "karma-mocha": "^1.3.0",
     "karma-opera-launcher": "^1.0.0",
     "karma-requirejs": "^1.1.0",
     "karma-safari-launcher": "^1.0.0",
@@ -83,6 +87,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "^0.0.31",
     "karma-webpack": "^2.0.3",
+    "karma": "^2.0.0",
     "localtunnel": "^1.3.0",
     "lodash": "^4.17.4",
     "mkpath": "^1.0.0",
@@ -98,14 +103,8 @@
     "through2": "^2.0.3",
     "uglify-js": "^2.8.10",
     "url-parse": "^1.0.5",
-    "webpack": "^3.0.0",
     "webpack-stream": "^3.2.0",
+    "webpack": "^3.0.0",
     "yargs": "^1.3.1"
-  },
-  "dependencies": {
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "core-js": "^2.4.1",
-    "gulp-sourcemaps": "^2.6.0",
-    "just-clone": "^1.0.2"
   }
 }
