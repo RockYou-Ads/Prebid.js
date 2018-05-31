@@ -4,7 +4,7 @@
   "description": "Header Bidding Management Library",
   "main": "build/prebid.js",
   "scripts": {
-    "install":"gulp build",
+    "install": "gulp build",
     "test": "gulp run-tests",
     "lint": "gulp lint"
   },
