@@ -322,6 +322,7 @@ let interpretResponse = (serverResponse, request) => {
           ad: bannerCreative,
           ttl: ttl,
           creativeId: bid.adid,
+          adId: bid.adid,
           netRevenue: true,
           currency: responseBody.cur,
           vastUrl: null,
